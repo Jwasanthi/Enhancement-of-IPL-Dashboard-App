@@ -1,51 +1,59 @@
 // Write your code here
 import './index.css'
+import {Component} from 'react'
+import MatchCard from '../MatchCard'
 
-const LatestMatch = props => {
-  const {latestMatchData} = props
-  const {
-    competingTeam,
-    date,
-    venue,
-    result,
-    competingTeamLogo,
-    firstInnings,
-    secondInnings,
-    manOfTheMatch,
-    umpires,
-  } = latestMatchData
+class LatestMatch extends Component {
+  render() {
+    const {latestMatch, recentMatchesDetails} = this.props
+    const {
+      umpires,
+      result,
+      manOfTheMatch,
+      id,
+      date,
+      venue,
+      competingTeam,
+      competingTeamLogo,
+      firstInnings,
+      secondInnings,
+      matchStatus,
+    } = latestMatch
+    console.log(id)
+    console.log(matchStatus)
 
-  return (
-    <div className="latest-match-container">
-      <h1 className="latest-match-heading">Latest Matches</h1>
-      <div className="latest-match-card">
-        <div className="latest-match-details-logo-container">
-          <div className="latest-match-details-1">
-            <p className="latest-match-team-name">{competingTeam}</p>
-            <p className="latest-match-date">{date}</p>
-            <p className="match-details">{venue}</p>
-            <p className="match-details">{result}</p>
+    return (
+      <div className="container">
+        <div className="latest-match">
+          <div className="left">
+            <p>{competingTeam}</p>
+            <p>{date}</p>
+            <p>{venue}</p>
+            <p>{result}</p>
           </div>
           <img
             src={competingTeamLogo}
-            className="latest-match-team-logo"
             alt={`latest match ${competingTeam}`}
+            className="middle"
           />
+          <div className="right">
+            <h1>First Innings</h1>
+            <p>{firstInnings}</p>
+            <h1>Second Innings</h1>
+            <p>{secondInnings}</p>
+            <h1>Man Of The Match</h1>
+            <p>{manOfTheMatch}</p>
+            <h1>Umpires</h1>
+            <p>{umpires}</p>
+          </div>
         </div>
-        <hr className="separator" />
-        <div className="latest-match-details-2">
-          <p className="latest-match-details-label">First Innings</p>
-          <p className="latest-match-details-value">{firstInnings}</p>
-          <p className="latest-match-details-label">Second Innings</p>
-          <p className="latest-match-details-value">{secondInnings}</p>
-          <p className="latest-match-details-label">Man Of The Match</p>
-          <p className="latest-match-details-value">{manOfTheMatch}</p>
-          <p className="latest-match-details-label">Umpires</p>
-          <p className="latest-match-details-value">{umpires}</p>
-        </div>
+        <ul className="history">
+          {recentMatchesDetails.map(each => (
+            <MatchCard eachteam={each} key={each.id} />
+          ))}
+        </ul>
       </div>
-    </div>
-  )
+    )
+  }
 }
-
 export default LatestMatch
